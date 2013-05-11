@@ -22,7 +22,7 @@ set(CONFIG_ADD_OPTIONS "")
 			OUTPUT BUILD_LIBFL
 			# source
 			#COMMAND wget -qO- http://downloads.sourceforge.net/project/flex/${TOOL_LIBFL_SOURCE} |tar -xjvf - 
-			COMMAND test -e ${CMAKE_CURRENT_SOURCE_DIR}/${TOOL_LIBFL_SOURCE} || wget -qO- http://downloads.sourceforge.net/project/flex/${TOOL_LIBFL_SOURCE} > ${CMAKE_CURRENT_SOURCE_DIR}/${TOOL_LIBFL_SOURCE}
+			COMMAND test -e ${CMAKE_CURRENT_SOURCE_DIR}/${TOOL_LIBFL_SOURCE} || wget http://downloads.sourceforge.net/project/flex/${TOOL_LIBFL_SOURCE} -O ${CMAKE_CURRENT_SOURCE_DIR}/${TOOL_LIBFL_SOURCE}
 			COMMAND tar -xjvf ${CMAKE_CURRENT_SOURCE_DIR}/${TOOL_LIBFL_SOURCE}
 			# configure
 			COMMAND ${target_platform_preconfigure_options} ${TOOL_LIBFL_DIR}/configure --host="${target_platform}" --prefix=${CMAKE_BINARY_DIR} LDFLAGS="${SELF_LDFLAGS}" CPPFLAGS="${SELF_CPPFLAGS}" ${CONFIG_ADD_OPTIONS} 
@@ -35,7 +35,7 @@ set(CONFIG_ADD_OPTIONS "")
 		add_custom_command(
 			OUTPUT BUILD_LIBFL
 			#COMMAND wget -qO- http://downloads.sourceforge.net/project/flex/${TOOL_LIBFL_SOURCE} | tar -xjvf - 
-			COMMAND test -e ${CMAKE_CURRENT_SOURCE_DIR}/${TOOL_LIBFL_SOURCE} || wget -qO- http://downloads.sourceforge.net/project/flex/${TOOL_LIBFL_SOURCE} > ${CMAKE_CURRENT_SOURCE_DIR}/${TOOL_LIBFL_SOURCE}
+			COMMAND test -e ${CMAKE_CURRENT_SOURCE_DIR}/${TOOL_LIBFL_SOURCE} || wget http://downloads.sourceforge.net/project/flex/${TOOL_LIBFL_SOURCE} -O ${CMAKE_CURRENT_SOURCE_DIR}/${TOOL_LIBFL_SOURCE}
 			COMMAND tar -xjvf ${CMAKE_CURRENT_SOURCE_DIR}/${TOOL_LIBFL_SOURCE}
 			COMMAND ${TOOL_LIBFL_DIR}/configure --prefix=${CMAKE_BINARY_DIR} LDFLAGS="${SELF_LDFLAGS}" CPPFLAGS="${SELF_CPPFLAGS}" ${CONFIG_ADD_OPTIONS}
 			COMMAND make -j4 && make install 
