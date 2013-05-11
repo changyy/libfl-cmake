@@ -24,14 +24,21 @@ set(CONFIG_ADD_OPTIONS "")
 	if(DEFINED CMAKE_TOOLCHAIN_FILE)
 		add_custom_command(
 			OUTPUT BUILD_LIBFL
-			COMMAND wget -qO- http://downloads.sourceforge.net/project/flex/${TOOL_LIBFL_SOURCE} |tar -xjvf - && cd ${CMAKE_BINARY_DIR}/${TOOL_LIBFL_DIR} && ${target_platform_preconfigure_options} ./configure --host="${target_platform}" --prefix=${CMAKE_BINARY_DIR} LDFLAGS="${SELF_LDFLAGS}" CPPFLAGS="${SELF_CPPFLAGS}" ${CONFIG_ADD_OPTIONS} && make -j2 && make install
-			WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+			# source
+			COMMAND wget -qO- http://downloads.sourceforge.net/project/flex/${TOOL_LIBFL_SOURCE} |tar -xjvf - 
+			# configure
+			COMMAND ${target_platform_preconfigure_options} ${TOOL_LIBFL_DIR}/configure --host="${target_platform}" --prefix=${CMAKE_BINARY_DIR} LDFLAGS="${SELF_LDFLAGS}" CPPFLAGS="${SELF_CPPFLAGS}" ${CONFIG_ADD_OPTIONS} 
+			# build
+			COMMAND make -j4 && make install
+			WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 			COMMENT "Build libfl"
 		)
 	else(DEFINED CMAKE_TOOLCHAIN_FILE)
 		add_custom_command(
 			OUTPUT BUILD_LIBFL
-			COMMAND wget -qO- http://downloads.sourceforge.net/project/flex/${TOOL_LIBFL_SOURCE} | tar -xjvf - && cd ${CMAKE_BINARY_DIR}/${TOOL_LIBFL_DIR} && ./configure --prefix=${CMAKE_BINARY_DIR} LDFLAGS="${SELF_LDFLAGS}" CPPFLAGS="${SELF_CPPFLAGS}" ${CONFIG_ADD_OPTIONS} && make -j2 && make install 
+			COMMAND wget -qO- http://downloads.sourceforge.net/project/flex/${TOOL_LIBFL_SOURCE} | tar -xjvf - 
+			COMMAND ${TOOL_LIBFL_DIR}/configure --prefix=${CMAKE_BINARY_DIR} LDFLAGS="${SELF_LDFLAGS}" CPPFLAGS="${SELF_CPPFLAGS}" ${CONFIG_ADD_OPTIONS}
+			COMMAND make -j4 && make install 
 			WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 			COMMENT "Build libfl" 
 		)
